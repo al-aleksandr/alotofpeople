@@ -5,7 +5,7 @@
 import telebot
 import my_token
 from telebot import types
-import alotofpeaple
+import alop_main
 from datetime import datetime
 import locale
 
@@ -33,9 +33,7 @@ def GetCountEventsToResp(s):
 @my_bot.message_handler(content_types=['text'])
 def get_text_messages(message):
     print(message.text)
-    html_file = alotofpeaple.get_html()
-    # html_file = alotofpeaple.get_html('str_from_site.html')
-    event_list = alotofpeaple.get_events_google(html_file)
+    event_list = alop_main.get_list()
     send_events(message, event_list, count=GetCountEventsToResp(message.text))
 
 locale.setlocale(locale.LC_TIME, 'ru_RU.UTF-8')

@@ -8,4 +8,4 @@ pip install BeautifulSoup4
 pip install pytelegrambotapi
 
 # Run
-while true; do echo ------------------------; date; python ./tlg_bot.py; sleep 1; done
+while true; do echo ------------------------; date; python ./tlg_bot.py; done
