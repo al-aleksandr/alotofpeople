@@ -7,7 +7,6 @@ import json
 from io import StringIO
 from bs4 import BeautifulSoup
 from datetime import datetime
-import locale
 from common import print_all_event, get_html, convert_month_to_digit
 
 url = 'https://kiev.karabas.com/hall/dvorec-sporta/'
@@ -17,8 +16,6 @@ dt_last_update = datetime.today().replace(year=datetime.today().year - 1)
 event_ending_name = ' (k)'
 
 def convert_date(date_str, time_str):
-    locale.setlocale(locale.LC_TIME, 'ru_RU.UTF-8')
-
     date_formats = '%d %m %Y'
     time_format = '%H:%M'
 
@@ -71,7 +68,6 @@ def get_list():
     global dt_last_update
 
     print("PalatsSportu_karabas is called")
-    locale.setlocale(locale.LC_TIME, 'ru_RU.UTF-8')
 
     html_file = get_html(url, f_name, dt_last_update)
     dt_last_update = datetime.today()
@@ -80,8 +76,6 @@ def get_list():
     return event_list
 
 if __name__ == '__main__':
-    locale.setlocale(locale.LC_TIME, 'ru_RU.UTF-8')
-
     event_list = get_list()
     event_list = get_list()
 
