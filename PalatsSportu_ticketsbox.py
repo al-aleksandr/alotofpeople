@@ -23,29 +23,43 @@ def get_html(source=''):
     return html_file
 
 def convert_day_to_normal(date_str):
-    # date_str = date_str.replace(u"января", u"Январь")
-    # date_str = date_str.replace(u"февраля", u"Февраль")
-    # date_str = date_str.replace(u"марта", u"Март")
-    # date_str = date_str.replace(u"апреля", u"Апрель")
-    # date_str = date_str.replace(u"мая", u"Май")
-    # date_str = date_str.replace(u"июня", u"Июнь")
-    # date_str = date_str.replace(u"июля", u"Июль")
-    # date_str = date_str.replace(u"августа", u"Август")
-    # date_str = date_str.replace(u"сентября", u"Сентябрь")
-    # date_str = date_str.replace(u"октября", u"Октябрь")
-    # date_str = date_str.replace(u"ноября", u"Ноябрь")
-    # date_str = date_str.replace(u"декабря", u"Декабрь")
+    date_str = date_str.lower()
+    date_str = date_str.replace(u"января",   u"01")
+    date_str = date_str.replace(u"февраля",  u"02")
+    date_str = date_str.replace(u"марта",    u"03")
+    date_str = date_str.replace(u"апреля",   u"04")
+    date_str = date_str.replace(u"мая",      u"05")
+    date_str = date_str.replace(u"июня",     u"06")
+    date_str = date_str.replace(u"июля",     u"07")
+    date_str = date_str.replace(u"августа",  u"08")
+    date_str = date_str.replace(u"сентября", u"09")
+    date_str = date_str.replace(u"октября",  u"10")
+    date_str = date_str.replace(u"ноября",   u"11")
+    date_str = date_str.replace(u"декабря",  u"12")
+
+    date_str = date_str.replace(u"январь",   u"01")
+    date_str = date_str.replace(u"февраль",  u"02")
+    date_str = date_str.replace(u"март",     u"03")
+    date_str = date_str.replace(u"апрель",   u"04")
+    date_str = date_str.replace(u"май",      u"05")
+    date_str = date_str.replace(u"июнь",     u"06")
+    date_str = date_str.replace(u"июль",     u"07")
+    date_str = date_str.replace(u"август",   u"08")
+    date_str = date_str.replace(u"сентябрь", u"09")
+    date_str = date_str.replace(u"октябрь",  u"10")
+    date_str = date_str.replace(u"ноябрь",   u"11")
+    date_str = date_str.replace(u"декабрь",  u"12")
 
     return date_str
 
 def convert_date(date_str, time_str):
-    # print(date_str)
     locale.setlocale(locale.LC_TIME, 'ru_RU.UTF-8') # the ru locale is installed
-    date_formats = '%d %B %Y'
+    date_formats = '%d %m %Y'
     time_format = '%H:%M'
 
-    # dt2 = datetime(year=2020, month=6, day=1)
-    # print dt2.strftime('We are the %s' %date_formats)
+    print(date_str)
+    dt2 = datetime(year=2020, month=2, day=1)
+    print dt2.strftime('We are the %s' %date_formats)
 
     dt = datetime.strptime(date_str.encode('utf-8').strip(), date_formats)
     tm = datetime.strptime(time_str.encode('utf-8').strip(), time_format)

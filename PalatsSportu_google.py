@@ -25,35 +25,35 @@ def get_html(source=''):
     return html_file
 
 def convert_day_to_normal(date_str):
-    date_str = date_str.replace(u"февр.", u"фев.")
-    date_str = date_str.replace(u"мая",   u"май.")
-    date_str = date_str.replace(u"сент.", u"сен.")
-    date_str = date_str.replace(u"нояб.", u"ноя.")
+    date_str = date_str.replace(u"февр.", u"02")
+    date_str = date_str.replace(u"мая",   u"05")
+    date_str = date_str.replace(u"сент.", u"09")
+    date_str = date_str.replace(u"нояб.", u"11")
 
-    date_str = date_str.replace(u"січ.", u"янв.")
-    date_str = date_str.replace(u"лют.", u"фев.")
-    date_str = date_str.replace(u"бер.", u"мар.")
-    date_str = date_str.replace(u"квіт.", u"апр.")
-    date_str = date_str.replace(u"трав.", u"мая.")
-    date_str = date_str.replace(u"черв.", u"июн.")
-    date_str = date_str.replace(u"лип.", u"июл.")
-    date_str = date_str.replace(u"серп.", u"авг.")
-    date_str = date_str.replace(u"вер.", u"сен.")
-    date_str = date_str.replace(u"жовт.", u"окт.")
-    date_str = date_str.replace(u"лист.", u"ноя.")
-    date_str = date_str.replace(u"груд.", u"дек.")
+    date_str = date_str.replace(u"січ.",  u"01")
+    date_str = date_str.replace(u"лют.",  u"02")
+    date_str = date_str.replace(u"бер.",  u"03")
+    date_str = date_str.replace(u"квіт.", u"04")
+    date_str = date_str.replace(u"трав.", u"05")
+    date_str = date_str.replace(u"черв.", u"06")
+    date_str = date_str.replace(u"лип.",  u"07")
+    date_str = date_str.replace(u"серп.", u"08")
+    date_str = date_str.replace(u"вер.",  u"09")
+    date_str = date_str.replace(u"жовт.", u"10")
+    date_str = date_str.replace(u"лист.", u"11")
+    date_str = date_str.replace(u"груд.", u"12")
 
     return date_str
 
 def convert_date(date_str, time_str):
-    # print(date_str)
-    locale.setlocale(locale.LC_TIME, 'ru_RU.UTF-8') # the ru locale is installed
+    locale.setlocale(locale.LC_TIME, 'ru_RU.UTF-8')
 
-    date_formats = '%d %b.'
+    date_formats = '%d %m'
     time_format = '%H:%M'
 
-    # dt2 = datetime(year=2020, month=5, day=1)
-    # print dt2.strftime('We are the %s' %date_formats)
+    print(date_str)
+    dt2 = datetime(year=2020, month=5, day=1)
+    print dt2.strftime('We are the %s' %date_formats)
 
     dt = datetime.strptime(date_str.encode('utf-8').strip(), date_formats)
     if dt.month >= datetime.today().month:
