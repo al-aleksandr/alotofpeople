@@ -9,41 +9,13 @@ from io import StringIO
 from bs4 import BeautifulSoup
 from datetime import datetime
 import locale
-from common import print_all_event, get_html_from_file, get_html_from_internet
-# import tlg_bot
+from common import print_all_event, get_html, convert_month_to_digit
+
+url = 'https://www.google.com/search?client=ubuntu&channel=fs&q=%D0%B4%D0%B2%D0%BE%D1%80%D0%B5%D1%86+%D1%81%D0%BF%D0%BE%D1%80%D1%82%D0%B0+%D0%B0%D1%84%D0%B8%D1%88%D0%B0&ie=utf-8&oe=utf-8'
+f_name = 'PalatsSportu_google_page.txt'
+dt_last_update = datetime.today().replace(year=datetime.today().year - 1)
 
 event_ending_name = ' (g)'
-
-def get_html(source=''):
-    if source == '':
-        url = 'https://www.google.com/search?client=ubuntu&channel=fs&q=%D0%B4%D0%B2%D0%BE%D1%80%D0%B5%D1%86+%D1%81%D0%BF%D0%BE%D1%80%D1%82%D0%B0+%D0%B0%D1%84%D0%B8%D1%88%D0%B0&ie=utf-8&oe=utf-8'
-        html_file = get_html_from_internet(url)
-    else:
-        f_name = 'PalatsSportu_google_page.txt'
-        html_file = get_html_from_file(f_name)
-
-    return html_file
-
-def convert_day_to_normal(date_str):
-    date_str = date_str.replace(u"февр.", u"02")
-    date_str = date_str.replace(u"мая",   u"05")
-    date_str = date_str.replace(u"сент.", u"09")
-    date_str = date_str.replace(u"нояб.", u"11")
-
-    date_str = date_str.replace(u"січ.",  u"01")
-    date_str = date_str.replace(u"лют.",  u"02")
-    date_str = date_str.replace(u"бер.",  u"03")
-    date_str = date_str.replace(u"квіт.", u"04")
-    date_str = date_str.replace(u"трав.", u"05")
-    date_str = date_str.replace(u"черв.", u"06")
-    date_str = date_str.replace(u"лип.",  u"07")
-    date_str = date_str.replace(u"серп.", u"08")
-    date_str = date_str.replace(u"вер.",  u"09")
-    date_str = date_str.replace(u"жовт.", u"10")
-    date_str = date_str.replace(u"лист.", u"11")
-    date_str = date_str.replace(u"груд.", u"12")
-
-    return date_str
 
 def convert_date(date_str, time_str):
     locale.setlocale(locale.LC_TIME, 'ru_RU.UTF-8')
@@ -51,9 +23,9 @@ def convert_date(date_str, time_str):
     date_formats = '%d %m'
     time_format = '%H:%M'
 
-    print(date_str)
-    dt2 = datetime(year=2020, month=5, day=1)
-    print dt2.strftime('We are the %s' %date_formats)
+    # print(date_str)
+    # dt2 = datetime(year=2020, month=5, day=1)
+    # print dt2.strftime('We are the %s' %date_formats)
 
     dt = datetime.strptime(date_str.encode('utf-8').strip(), date_formats)
     if dt.month >= datetime.today().month:
@@ -86,7 +58,7 @@ def get_events_google(html_file):
     soup = BeautifulSoup(html_file, 'lxml')
     events_soup = soup.find_all('div', class_='h998We mlo-c')
     for event_div in events_soup:
-        event_date = convert_day_to_normal(event_div.find('div', class_='aXUuyd').text[4:])
+        event_date = convert_month_to_digit(event_div.find('div', class_='aXUuyd').text[4:])
         div_time = event_div.find('div', class_='HoEOQb')
         if div_time is None:
             event_time = '00:00'
@@ -146,25 +118,23 @@ def save_to_file(file_name, str_to_save):
     text_file.close()
 
 def get_list():
+    global url
+    global f_name
+    global dt_last_update
+
     print("PalatsSportu_goole is called")
-    locale.setlocale(locale.LC_TIME, 'ru_RU.UTF-8') # the ru locale is installed
-    html_file = get_html('PalatsSportu_google_page.txt')
-    # html_file = get_html()
-    # save_to_file("PalatsSportu_google_page.txt", html_file)
+    locale.setlocale(locale.LC_TIME, 'ru_RU.UTF-8')
+
+    html_file = get_html(url, f_name, dt_last_update)
+    dt_last_update = datetime.today()
     event_list = get_events_google(html_file)
+
     return event_list
 
 if __name__ == '__main__':
-    locale.setlocale(locale.LC_TIME, 'ru_RU.UTF-8') # the ru locale is installed
-    # html_file = get_html()
-    # save_to_file("PalatsSportu_google_page.txt", html_file)
-    # event_list = get_events_google_2(html_file)
-    html_file = get_html('PalatsSportu_google_page.txt')
-    # save_to_file("str_from_file.txt", html_file)
-    # print(html_file)
-    # print(type(html_file))
-    # exit()
-    event_list = get_events_google(html_file)
-    # print(event_list)
+    locale.setlocale(locale.LC_TIME, 'ru_RU.UTF-8')
+
+    event_list = get_list()
+    event_list = get_list()
+
     print_all_event(event_list)
-    # get_habr()
