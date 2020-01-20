@@ -46,6 +46,7 @@ def get_html(url, f_name, dt_last_update):
 
 
 def convert_month_to_digit(date_str):
+    # print(date_str)
     date_str = date_str.lower()
 
     date_str = date_str.replace(u"февр.", u"02")

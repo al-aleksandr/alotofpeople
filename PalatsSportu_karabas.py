@@ -38,13 +38,12 @@ def get_events_karabas(html_file):
     # print(events_soup)
     for event_div in events_soup:
         # print(event_div)
-        # return 
-        date_str = event_div.find('ins', class_='ct-date').text[1:4] +\
-                event_div.find('ins', class_='ct-date').span.text
+        date_str = event_div.find('ins', class_='ct-date').text[1:4].strip() + ' ' +\
+                event_div.find('ins', class_='ct-date').span.text.strip()
 
         event_date = convert_month_to_digit(date_str.replace(',', ''))
         event_time = event_div.find_all('span', class_='ctr-cell')[1].find_all('ins')[2].text
-        event_title = event_div.find_all('span', class_='ctr-cell')[1].find_all('span', class_='ctr-cell-link')[1].text.strip()
+        event_title = event_div.find_all('span', class_='ctr-cell')[1].find('a', class_='ctr-cell-link').text.strip()
         event_title += event_ending_name
 
         # print('\n\n\n')
