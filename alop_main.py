@@ -43,12 +43,12 @@ def get_upcomming_events(count_days=7):
         if day_ev != []:
             day_list.extend(day_ev)
 
-    event_list.append(day.strftime(u"----------------- %a %d/%m (Сегодня) -\n").decode('utf-8'))
+    event_list.append(day.strftime(u"----------------- %a %d/%m (Сегодня) -").decode('utf-8'))
     if day_list != []:
         event_list.extend(day_list)
         no_event = 0
     else:
-        event_list.append(u'Нет событий')
+        event_list.append(u'Нет событий\n')
 
     day += timedelta(days=1)
 
