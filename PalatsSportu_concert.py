@@ -7,32 +7,13 @@ import json
 from io import StringIO
 from bs4 import BeautifulSoup
 from datetime import datetime
-from common import print_all_event, get_html, convert_month_to_digit
+from common import print_all_event, get_html, convert_month_to_digit, convert_date, add_year_auto
 
 url = 'https://concert.ua/ru/search-result?query=%D0%B4%D0%B2%D0%BE%D1%80%D0%B5%D1%86+%D1%81%D0%BF%D0%BE%D1%80%D1%82%D0%B0'
 f_name = 'PalatsSportu_concert_page.txt'
 dt_last_update = datetime.today().replace(year=datetime.today().year - 1)
 
 event_ending_name = ' (c)'
-
-def convert_date(date_str, time_str):
-    date_formats = '%d %m'
-    time_format = '%H:%M'
-
-    # print(date_str)
-    # dt2 = datetime(year=2020, month=2, day=1)
-    # print dt2.strftime('We are the %s' %date_formats)
-
-    dt = datetime.strptime(date_str.encode('utf-8').strip(), date_formats)
-    if dt.month >= datetime.today().month:
-        dt = dt.replace(year=datetime.today().year)
-    else:
-        dt = dt.replace(year=datetime.today().year + 1)
-
-    tm = datetime.strptime(time_str.encode('utf-8').strip(), time_format)
-    dt = dt.replace(hour=tm.hour, minute=tm.minute)
-
-    return dt
 
 def get_events_concert(html_file):
     event_list = []
@@ -45,6 +26,7 @@ def get_events_concert(html_file):
 
         event_ar = event_div.find('span', class_='event__date').text.strip()[0:-4]
         event_date = convert_month_to_digit(event_ar[0:-6])
+        event_date = add_year_auto(event_date)
         event_time = event_ar[-6:].strip()
         event_title = event_div.find('span', class_='event__name').text.strip()
         event_title += event_ending_name

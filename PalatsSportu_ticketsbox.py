@@ -7,27 +7,13 @@ import json
 from io import StringIO
 from bs4 import BeautifulSoup
 from datetime import datetime
-from common import print_all_event, get_html, convert_month_to_digit
+from common import print_all_event, get_html, convert_month_to_digit, convert_date
 
 url = 'https://ticketsbox.com/dvorets-sporta3/'
 f_name = 'PalatsSportu_ticketsbox_page.txt'
 dt_last_update = datetime.today().replace(year=datetime.today().year - 1)
 
 event_ending_name = ' (t)'
-
-def convert_date(date_str, time_str):
-    date_formats = '%d %m %Y'
-    time_format = '%H:%M'
-
-    # print(date_str)
-    # dt2 = datetime(year=2020, month=2, day=1)
-    # print dt2.strftime('We are the %s' %date_formats)
-
-    dt = datetime.strptime(date_str.encode('utf-8').strip(), date_formats)
-    tm = datetime.strptime(time_str.encode('utf-8').strip(), time_format)
-    dt = dt.replace(hour=tm.hour, minute=tm.minute)
-    # print(dt)
-    return dt
 
 def get_ev_date(elem):
     return elem['date']

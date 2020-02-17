@@ -8,32 +8,13 @@ import json
 from io import StringIO
 from bs4 import BeautifulSoup
 from datetime import datetime
-from common import print_all_event, get_html, convert_month_to_digit
+from common import print_all_event, get_html, convert_month_to_digit, convert_date, add_year_auto
 
 url = 'https://www.google.com/search?client=ubuntu&channel=fs&q=%D0%B4%D0%B2%D0%BE%D1%80%D0%B5%D1%86+%D1%81%D0%BF%D0%BE%D1%80%D1%82%D0%B0+%D0%B0%D1%84%D0%B8%D1%88%D0%B0&ie=utf-8&oe=utf-8'
 f_name = 'PalatsSportu_google_page.txt'
 dt_last_update = datetime.today().replace(year=datetime.today().year - 1)
 
 event_ending_name = ' (g)'
-
-def convert_date(date_str, time_str):
-    date_formats = '%d %m'
-    time_format = '%H:%M'
-
-    # print(date_str)
-    # dt2 = datetime(year=2020, month=5, day=1)
-    # print dt2.strftime('We are the %s' %date_formats)
-
-    dt = datetime.strptime(date_str.encode('utf-8').strip(), date_formats)
-    if dt.month >= datetime.today().month:
-        dt = dt.replace(year=datetime.today().year)
-    else:
-        dt = dt.replace(year=datetime.today().year + 1)
-
-    tm = datetime.strptime(time_str.encode('utf-8').strip(), time_format)
-    dt = dt.replace(hour=tm.hour, minute=tm.minute)
-
-    return dt
 
 def get_events_google(html_file):
     event_list = []
@@ -42,6 +23,7 @@ def get_events_google(html_file):
     events_soup = soup.find_all('div', class_='h998We mlo-c')
     for event_div in events_soup:
         event_date = convert_month_to_digit(event_div.find('div', class_='aXUuyd').text[4:])
+        event_date = add_year_auto(event_date)
         div_time = event_div.find('div', class_='HoEOQb')
         if div_time is None:
             event_time = '00:00'

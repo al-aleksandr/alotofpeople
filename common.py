@@ -46,7 +46,7 @@ def get_html(url, f_name, dt_last_update):
 
 
 def convert_month_to_digit(date_str):
-    # print(date_str)
+    # print("convert_month_to_digit: input %s" % (date_str))
     date_str = date_str.lower()
 
     date_str = date_str.replace(u"февр.", u"02")
@@ -93,7 +93,35 @@ def convert_month_to_digit(date_str):
     date_str = date_str.replace(u"ноябрь",   u"11")
     date_str = date_str.replace(u"декабрь",  u"12")
 
+    # print("convert_month_to_digit: output %s" % (date_str))
+
     return date_str
+
+def add_year_auto(date_str_no_year):
+    if int(date_str_no_year[-2:]) >= datetime.today().month:
+        date_str = date_str_no_year + " " + str(datetime.today().year)
+    else:
+        date_str = date_str_no_year + " " + str(datetime.today().year + 1)
+
+    return date_str
+
+def convert_date(date_str, time_str):
+    date_formats = '%d %m %Y'
+    time_format = '%H:%M'
+
+    # print(date_str)
+    # dt2 = datetime(year=2020, month=2, day=1)
+    # print dt2.strftime('We are the %s' %date_formats)
+
+    dt = datetime.strptime(date_str.encode('utf-8').strip(), date_formats)
+
+    tm = datetime.strptime(time_str.encode('utf-8').strip(), time_format)
+    dt = dt.replace(hour=tm.hour, minute=tm.minute)
+    # print(dt)
+    return dt
+
+def get_date_today():
+    return datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
 
 def print_all_event(event_list):
     for item in event_list:
