@@ -7,6 +7,8 @@ import json
 from io import StringIO
 from bs4 import BeautifulSoup
 from datetime import datetime
+
+import global_settings
 from common import print_all_event, get_html, convert_month_to_digit, convert_date
 
 url = 'https://ticketsbox.com/dvorets-sporta3/'
@@ -61,6 +63,8 @@ def get_list():
     return event_list
 
 if __name__ == '__main__':
+    global_settings.init_settings()
+
     event_list = get_list()
     event_list = get_list()
 

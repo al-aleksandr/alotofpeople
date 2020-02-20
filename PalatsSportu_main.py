@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import global_settings
 import PalatsSportu_google
 import PalatsSportu_karabas
 import PalatsSportu_ticketsbox
@@ -30,4 +31,6 @@ def get_list():
 	return remove_same_event(PS_list)
 
 if __name__ == '__main__':
+    global_settings.init_settings()
+
 	print("PalatsSportu_main")

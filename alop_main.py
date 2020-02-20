@@ -1,10 +1,12 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from datetime import timedelta
+
 import PalatsSportu_main
 import OlympicStadium_google
+import global_settings
 from common import print_all_event, get_date_today
-from datetime import timedelta
 
 def get_list():
     PS_list = PalatsSportu_main.get_list()
@@ -43,7 +45,7 @@ def get_upcomming_events(count_days=7):
         if day_ev != []:
             day_list.extend(day_ev)
 
-    event_list.append(day.strftime(u"----------------- %a %d/%m (Сегодня) -").decode('utf-8'))
+    event_list.append(day.strftime(u'----------------- %a %d/%m (Сегодня) -'))
     if day_list != []:
         event_list.extend(day_list)
         no_event = 0
@@ -60,7 +62,7 @@ def get_upcomming_events(count_days=7):
                 day_list.extend(day_ev)
 
         if day_list != []:
-            event_list.append(day.strftime("----------------- %a %d/%m -----------------").decode('utf-8'))
+            event_list.append(day.strftime(u'----------------- %a %d/%m -----------------'))
             event_list.extend(day_list)
             no_event = 0
 
@@ -72,10 +74,11 @@ def get_upcomming_events(count_days=7):
     return event_list
 
 if __name__ == '__main__':
+    global_settings.init_settings()
+
     print("alop_main")
 
     ev_db = get_db()
-    
     for ev in ev_db:
         print("%s:" %(ev["place"]))
         print_all_event(ev["ev_list"])

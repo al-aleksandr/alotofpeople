@@ -5,6 +5,8 @@ import requests
 import locale
 from datetime import datetime
 
+import global_settings
+
 def get_html_from_file(file_name=''):
     print("html form %s" %(file_name))
 
@@ -26,7 +28,7 @@ def get_html_from_internet(url=''):
         # 'Accept-Language': 'en-US,en;q=0.5',
         }
     page = requests.get(url, headers=headers, verify=False)
-    html_file = page.text.encode('utf-8')
+    html_file = page.text
 
     return html_file
 
@@ -36,6 +38,9 @@ def save_to_file(file_name, str_to_save):
     text_file.close()
 
 def get_html(url, f_name, dt_last_update):
+    if global_settings.GetDataFromLocalFileOnly:
+        return get_html_from_file(f_name)
+
     if (datetime.today() - dt_last_update).days >= 1:
         html_file = get_html_from_internet(url)
         save_to_file(f_name, html_file)
@@ -113,9 +118,9 @@ def convert_date(date_str, time_str):
     # dt2 = datetime(year=2020, month=2, day=1)
     # print dt2.strftime('We are the %s' %date_formats)
 
-    dt = datetime.strptime(date_str.encode('utf-8').strip(), date_formats)
+    dt = datetime.strptime(date_str.strip(), date_formats)
 
-    tm = datetime.strptime(time_str.encode('utf-8').strip(), time_format)
+    tm = datetime.strptime(time_str.strip(), time_format)
     dt = dt.replace(hour=tm.hour, minute=tm.minute)
     # print(dt)
     return dt

@@ -8,6 +8,8 @@ import json
 from io import StringIO
 from bs4 import BeautifulSoup
 from datetime import datetime
+
+import global_settings
 from common import print_all_event, get_html, convert_month_to_digit, convert_date, add_year_auto
 
 url = 'https://www.google.com/search?client=ubuntu&channel=fs&q=%D0%B4%D0%B2%D0%BE%D1%80%D0%B5%D1%86+%D1%81%D0%BF%D0%BE%D1%80%D1%82%D0%B0+%D0%B0%D1%84%D0%B8%D1%88%D0%B0&ie=utf-8&oe=utf-8'
@@ -56,6 +58,8 @@ def get_list():
     return event_list
 
 if __name__ == '__main__':
+    global_settings.init_settings()
+
     event_list = get_list()
     event_list = get_list()
 
